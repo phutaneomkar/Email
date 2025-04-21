@@ -25,16 +25,16 @@
             emailInput = decodePunycode(emailInput);
 
             // Email validation regex
-            //const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             const resultElement = document.getElementById("result");
 
-            // if (emailPattern.test(emailInput)) {
-            //     resultElement.textContent = "Valid email address: " + emailInput;
-            //     resultElement.style.color = "green";
-            // } else {
-            //     resultElement.textContent = "Invalid email address. Please try again.";
-            //     resultElement.style.color = "red";
-            // }
+            if (emailPattern.test(emailInput)) {
+                resultElement.textContent = "Valid email address: " + emailInput;
+                resultElement.style.color = "green";
+            } else {
+                resultElement.textContent = "Invalid email address. Please try again.";
+                resultElement.style.color = "red";
+            }
         });
 
         // Function to decode Punycode domains
