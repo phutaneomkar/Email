@@ -19,20 +19,18 @@
     <script>
         document.getElementById("emailForm").addEventListener("submit", function (event) {
             event.preventDefault();
-            let emailInput = document.getElementById("email").value;
+            let emailInput = document.getElementById("email").value.trim().toLowerCase();
 
             // Decode Punycode before validation
             emailInput = decodePunycode(emailInput);
 
-            // Email validation regex
-            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             const resultElement = document.getElementById("result");
 
-            if (emailPattern.test(emailInput)) {
-                resultElement.textContent = "Valid email address: " + emailInput;
+            if (emailInput === "test@gmail.com") {
+                resultElement.textContent = "Success! Valid email address: " + emailInput;
                 resultElement.style.color = "green";
             } else {
-                resultElement.textContent = "Invalid email address. Please try again.";
+                resultElement.textContent = "Error: Only 'test@gmail.com' is accepted.";
                 resultElement.style.color = "red";
             }
         });
@@ -40,28 +38,16 @@
         // Function to decode Punycode domains
         function decodePunycode(email) {
             try {
-                const url = new URL("http://" + email.split("@")[1]);
-                return email.split("@")[0] + "@" + url.hostname;
+                const parts = email.split("@");
+                if (parts.length !== 2) return email;
+
+                const url = new URL("http://" + parts[1]);
+                return parts[0] + "@" + url.hostname;
             } catch (e) {
-                return email; // Return as is if decoding fails
+                return email; // Return as-is if decoding fails
             }
         }
     </script>
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
