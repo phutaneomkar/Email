@@ -1,4 +1,1 @@
-// logger.php
-<?php
-file_put_contents("log.txt", $_GET['data'] . "\n", FILE_APPEND);
-?>
+
