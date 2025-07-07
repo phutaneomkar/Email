@@ -1,52 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Validation with Punycode Decoding</title>
+  <meta charset="UTF-8">
+  <title>User Info Form</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    input { margin-bottom: 10px; padding: 5px; width: 250px; }
+    button { padding: 5px 15px; }
+    #result { margin-top: 20px; border-top: 1px solid #ccc; padding-top: 10px; }
+  </style>
 </head>
-
 <body>
-    <h2>Email Validation with Punycode Decoding</h2>
-    <form id="emailForm">
-        <label for="email">Enter your email:</label>
-        <input type="text" id="email" name="email" required>
-        <button type="submit">Validate</button>
-    </form>
-    <p id="result"></p>
 
-    <script>
-        document.getElementById("emailForm").addEventListener("submit", function (event) {
-            event.preventDefault();
-            let emailInput = document.getElementById("email").value;
+  <h2>User Information Form</h2>
 
-            // Decode Punycode before validation
-            emailInput = decodePunycode(emailInput);
+  <form id="userForm">
+    <label for="name">Name:</label><br />
+    <input type="text" id="name" name="name" required><br />
 
-            // Email validation regex
-            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            const resultElement = document.getElementById("result");
+    <label for="phone">Phone Number:</label><br />
+    <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required><br />
 
-            if (emailPattern.test(emailInput)) {
-                resultElement.textContent = "Valid email address: " + emailInput;
-                resultElement.style.color = "green";
-            } else {
-                resultElement.textContent = "Invalid email address. Please try again.";
-                resultElement.style.color = "red";
-            }
-        });
+    <label for="email">Email:</label><br />
+    <input type="email" id="email" name="email" required><br />
 
-        // Function to decode Punycode domains
-        function decodePunycode(email) {
-            try {
-                const url = new URL("http://" + email.split("@")[1]);
-                return email.split("@")[0] + "@" + url.hostname;
-            } catch (e) {
-                return email; // Return as is if decoding fails
-            }
-        }
-    </script>
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    const form = document.getElementById('userForm');
+    const result = document.getElementById('result');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault(); // prevent page reload
+
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const email = document.getElementById('email').value;
+
+      result.innerHTML = `
+        <h3>Submitted Data:</h3>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Email:</strong> ${email}</p>
+      `;
+    });
+  </script>
+
 </body>
-
 </html>
